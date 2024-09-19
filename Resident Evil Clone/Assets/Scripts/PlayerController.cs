@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float jumpForce;
     [SerializeField] float mouseSensitivitiy;
     [SerializeField] float verticalLookLimit;
+    [SerializeField] private Transform firePoint;
 
     private bool isGrounded = true;
     private float xRotation = 0;
@@ -33,7 +34,9 @@ public class PlayerController : MonoBehaviour
         LookAround();
         Move();
         Jump();
+        Shoot();
     }
+    
 
     void LookAround() // Mainly concerned with mouse movement
     {
@@ -85,6 +88,19 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.tag == "Ground")
         {
             isGrounded = false;
+        }
+    }
+
+    private void Shoot()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            RaycastHit hit;
+            if (Physics.Raycast(firePoint.position, firePoint.forward, out hit, 100) && hit.transform)
+            {
+                Debug.DrawRay(firePoint.position, firePoint.forward * hit.distance, Color.red, 2f);
+                hit.transform.GetComponent<ZombieController>().TakeDamage(1);
+            }
         }
     }
 
