@@ -20,38 +20,39 @@ public class Pistol : Weapon
         
     }
 
-    protected override void Fire()
+    public override void Fire()
     {
         base.Fire();
-        GameObject go = Instantiate(bullet, firePoint.position, Quaternion.identity);
-        Rigidbody rb = go.GetComponent<Rigidbody>();
-        rb.AddForce(Vector3.forward * bulletForce, ForceMode.Impulse);
+        //GameObject go = Instantiate(bullet, firePoint.position, Quaternion.identity);
+        //Rigidbody rb = go.GetComponent<Rigidbody>();
+        //rb.AddForce(Vector3.forward * bulletForce, ForceMode.Impulse);
     }
 
-    protected override void Reload()
+    public override void Reload(Magazine mag)
     {
-        if (currentLoadedAmmo == ammoCapacity || currentSpareAmmo <= 0)
-        {
-            return;
-        }
-        if (currentSpareAmmo > 0)
-        {
-            currentLoadedAmmo = Mathf.Min(currentSpareAmmo, ammoCapacity + 1);
-            currentSpareAmmo -= Mathf.Min(currentSpareAmmo, ammoCapacity + 1);
-        }
-        else
-        {
-            currentLoadedAmmo = Mathf.Min(currentSpareAmmo, ammoCapacity);
-            currentSpareAmmo -= Mathf.Min(currentSpareAmmo, ammoCapacity);
-        }
-        
-        if (currentLoadedAmmo <= 0)
-        {
-            canFire = false;
-        }
-        else
-        {
-            canFire = true;
-        }
+        base.Reload(mag);
+        //    if (currentLoadedAmmo == ammoCapacity || currentSpareAmmo <= 0)
+        //    {
+        //        return;
+        //    }
+        //    if (currentSpareAmmo > 0)
+        //    {
+        //        currentLoadedAmmo = Mathf.Min(currentSpareAmmo, ammoCapacity + 1);
+        //        currentSpareAmmo -= Mathf.Min(currentSpareAmmo, ammoCapacity + 1);
+        //    }
+        //    else
+        //    {
+        //        currentLoadedAmmo = Mathf.Min(currentSpareAmmo, ammoCapacity);
+        //        currentSpareAmmo -= Mathf.Min(currentSpareAmmo, ammoCapacity);
+        //    }
+
+        //    if (currentLoadedAmmo <= 0)
+        //    {
+        //        canFire = false;
+        //    }
+        //    else
+        //    {
+        //        canFire = true;
+        //    }
     }
 }

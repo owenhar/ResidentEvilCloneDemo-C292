@@ -10,6 +10,10 @@ public abstract class Weapon : MonoBehaviour
     [SerializeField] protected bool canFire;
 
     [SerializeField] protected Transform firePoint;
+    [SerializeField] public Enums.MagazineType magazineType;
+
+    [SerializeField] protected Magazine magazine;
+    
 
 
     // Start is called before the first frame update
@@ -24,32 +28,33 @@ public abstract class Weapon : MonoBehaviour
         
     }
 
-    protected virtual void Reload() //virtual methods can be overridden by classes that inherit Weapon
+    public virtual void Reload(Magazine mag) //virtual methods can be overridden by classes that inherit Weapon
     {
-        if (currentLoadedAmmo == ammoCapacity || currentSpareAmmo <= 0)
-        {
-            return;
-        }
+        magazine = mag;
+        //if (currentLoadedAmmo == ammoCapacity || currentSpareAmmo <= 0)
+        //{
+        //    return;
+        //}
 
-        currentLoadedAmmo = Mathf.Min(currentSpareAmmo, ammoCapacity);
-        currentSpareAmmo -= Mathf.Min(currentSpareAmmo, ammoCapacity);
+        //currentLoadedAmmo = Mathf.Min(currentSpareAmmo, ammoCapacity);
+        //currentSpareAmmo -= Mathf.Min(currentSpareAmmo, ammoCapacity);
 
-        if (currentLoadedAmmo <= 0 )
-        {
-            canFire = false;
-        } else
-        {
-            canFire = true;
-        }
+        //if (currentLoadedAmmo <= 0 )
+        //{
+        //    canFire = false;
+        //} else
+        //{
+        //    canFire = true;
+        //}
     }
 
-    protected virtual void Fire()
+    public virtual void Fire()
     {
-        if (!(canFire && ammoCapacity > 0))
+        if (magazine == null || magazine.GetRounds() <= 0)
         {
-            canFire = false;
             return;
         }
+        magazine.RemoveRound();
         RaycastHit hit;
         currentLoadedAmmo--;
         if (currentLoadedAmmo <= 0 )
@@ -64,6 +69,16 @@ public abstract class Weapon : MonoBehaviour
                 hit.transform.GetComponent<ZombieController>().TakeDamage(1);
             }
         }
+    }
+
+    public virtual int CheckAmmo()
+    {
+        if (magazine == null)
+        {
+            return 0;
+        }
+
+        return magazine.GetRounds();
     }
 }
 

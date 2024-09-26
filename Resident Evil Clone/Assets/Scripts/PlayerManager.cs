@@ -11,6 +11,7 @@ public class PlayerManager : MonoBehaviour
     public static PlayerManager instance;
     [SerializeField] TextMeshProUGUI healthText;
     [SerializeField] float maxHealth = 10f;
+    [SerializeField] TextMeshProUGUI ammoText;
 
     float currentHealth;
 
@@ -52,5 +53,10 @@ public class PlayerManager : MonoBehaviour
     void UpdateGUI()
     {
         healthText.text = "Health: " + currentHealth.ToString() + "/" + maxHealth.ToString();
+    }
+
+    public void UpdateAmmo(int ammo)
+    {
+        ammoText.text = "Ammo: " + ammo.ToString();
     }
 }
