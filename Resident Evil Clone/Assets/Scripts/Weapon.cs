@@ -66,8 +66,15 @@ public abstract class Weapon : MonoBehaviour
             Debug.DrawRay(firePoint.position, firePoint.forward * hit.distance, Color.red, 2f);
             if (hit.transform.CompareTag("Zombie"))
             {
+                MyEvents.shotFired.Invoke(true);
                 hit.transform.GetComponent<ZombieController>().TakeDamage(1);
+            } else
+            {
+                MyEvents.shotFired.Invoke(false);
             }
+        } else
+        {
+            MyEvents.shotFired.Invoke(false);
         }
     }
 

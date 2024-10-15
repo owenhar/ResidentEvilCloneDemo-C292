@@ -14,6 +14,7 @@ public class ZombieController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        target = GameObject.FindGameObjectWithTag("Player").transform;
         agent = GetComponent<NavMeshAgent>();
         agent.speed = moveSpeed;
         currentHealth = maxHealth;
@@ -32,6 +33,7 @@ public class ZombieController : MonoBehaviour
 
         if (currentHealth <= 0)
         {
+            MyEvents.zombieKilled.Invoke();
             Destroy(gameObject);
         }
     }
